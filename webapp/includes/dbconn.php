@@ -1,18 +1,16 @@
-<?php  
-define('DB_HOST', 'tls_db'); // Docker service name in docker-compose
-define('DB_USER', 'teacher_user');
-define('DB_PASS', 'teach_secret');
-define('DB_NAME', 'teacher_leave_db');
-
-try {
-    $dbh = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8",
-        DB_USER,
-        DB_PASS,
-        array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
-    );
-} catch (PDOException $e) {
-    exit("Error: Could not connect to database. " . $e->getMessage());
-}
-
-// NO closing PHP tag, no extra newlines or spaces
+<?php 
+    define('DB_HOST','localhost');
+    define('DB_USER','root');
+    define('DB_PASS','');
+    define('DB_NAME','teacherleavedb');
+    
+    try
+    {
+        $dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER, DB_PASS,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+    }
+        catch (PDOException $e)
+    {
+        echo "Looks like you don't have any database/connection. Please check your Database Connection and Try Again! </br>";
+        exit("Error: " . $e->getMessage());
+    }
+?>
