@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  tls_web:
+    image: php:8.0-apache
+    container_name: tls_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./webapp:/var/www/html
+    depends_on:
+      - tls_db
+    networks:
+      - tls_network
+
+  tls_db:
+    image: mysql:5.7
+    container_name: tls_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: teacher_leave_db
+      MYSQL_USER: teacher_user
+      MYSQL_PASSWORD: teach_secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/seed.sql
+    networks:
+      - tls_network
+
+networks:
+  tls_network:
+
+volumes:
+  db_data:
